@@ -1,0 +1,7 @@
+{%extends "base.html" %}
+{% block head_title %}Welcome || {{ block.super }}{% endblock head_title%}
+
+{% block content%}
+<h2><a href='{% url "register" %}'>Sign-Up</a> to become a player and join a team.</h1>
+<h2>Search Brackets</h1>
+{% endblock content%}

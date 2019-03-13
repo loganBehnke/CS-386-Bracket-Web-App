@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block head_title %}Players || {{ block.super }}{% endblock head_title %}
+
+{%block content%}
+<h1>Player List</h1>
+<p>Already made an account? Become a <a href = '{% url "player-sign-up" %}''>player</a>.</p>
+<ul>
+    {% for obj in object_list %}
+        <li><a href="/players/{{ obj.slug }}/">{{obj}}</a></li>
+    {%endfor%}
+</ul>
+{%endblock content%}

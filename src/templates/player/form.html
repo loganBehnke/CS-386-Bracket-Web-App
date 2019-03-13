@@ -1,0 +1,15 @@
+{%extends "base.html" %}
+{% block head_title %}Team Sign-Up || {{ block.super }}{% endblock head_title%}
+
+{% block content%}
+<h1>Plyer Sign-Up</h1>
+<p>Give us your username for the game you are trying to play before joining a team.</p>
+
+{% if form.errors%}
+{{ form.errors }}
+{%endif%}
+<form method="POST"> {%csrf_token%}
+    {{ form.as_p }}
+    <button type="submit">Sign-Up</button>
+    </form>
+{% endblock content%}
