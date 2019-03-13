@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.admin import User
-from .models import Team
+
+from .models import Bracket
+from RegisteredTeams.models import Team
 
 
 class BracketCreateForm(forms.ModelForm):
@@ -17,11 +19,10 @@ class BracketCreateForm(forms.ModelForm):
             raise forms.ValidationError("Not a valid name")
         return name
 
-class JoinTeamForm(forms.ModelForm):
+class JoinBracketForm(forms.ModelForm):
     class Meta:
-        model = Team
+        model = Bracket
         fields = [
-            'players',
-            'subs',
+            'teams',
         ]
     
