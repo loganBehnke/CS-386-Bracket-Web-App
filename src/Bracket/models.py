@@ -33,6 +33,7 @@ class Bracket(models.Model):
     @property
     def title(self):
         return self.name
+    
 
 def rl_pre_save_reciever(sender, instance, *args, **kwargs):
     print("saving...")
@@ -41,7 +42,6 @@ def rl_pre_save_reciever(sender, instance, *args, **kwargs):
     
 def rl_post_save_reciever(sender, instance, *args, **kwargs):
     print("saved")
-
 
 pre_save.connect(rl_pre_save_reciever, sender=Team)
 

@@ -25,4 +25,3 @@ class JoinBracketForm(forms.ModelForm):
         fields = [
             'teams',
         ]
-    
