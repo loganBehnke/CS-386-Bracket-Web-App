@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
@@ -26,3 +27,12 @@ class BracketCreateView(LoginRequiredMixin, CreateView):
     form_class = BracketCreateForm
     template_name = 'Bracket/form.html'
     success_url = '/bracketz/'
+
+
+#TODO in future verison
+@login_required
+def join_bracketz(request, **kwargs):
+    print("Joining Bracket")
+
+    
+

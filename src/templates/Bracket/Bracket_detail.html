@@ -3,7 +3,13 @@
 
 {%block content%}
 <h1>{{ object.name }}</h1>
+<!--<a href="/bracketz/join-bracketz/{{object.slug}}" class="btn btn-default">Join Bracket</a> TODO in future realese -->
 <p>
-   
+    <br>
+    <h3>Registered Teams</h3>
+    {% for team in object.teams.all %}
+        {{team}}<br>
+    {% endfor %}
+    <br>
 </p>
 {%endblock content%}

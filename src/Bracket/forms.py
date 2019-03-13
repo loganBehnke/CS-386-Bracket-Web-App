@@ -11,6 +11,7 @@ class BracketCreateForm(forms.ModelForm):
         fields = [
             'name',
             'minNumOfTeams',
+            'teams'
         ]
 
     def clean_name(self):
