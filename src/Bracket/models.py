@@ -27,7 +27,6 @@ class Bracket(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        #return f"teams/{self.slug}"
         return reverse('bracketz', kwargs={'slug': self.slug})
 
     @property
@@ -43,8 +42,8 @@ def rl_pre_save_reciever(sender, instance, *args, **kwargs):
 def rl_post_save_reciever(sender, instance, *args, **kwargs):
     print("saved")
 
-pre_save.connect(rl_pre_save_reciever, sender=Team)
+pre_save.connect(rl_pre_save_reciever, sender=Bracket)
 
-post_save.connect(rl_post_save_reciever, sender=Team)
+post_save.connect(rl_post_save_reciever, sender=Bracket)
     
  
