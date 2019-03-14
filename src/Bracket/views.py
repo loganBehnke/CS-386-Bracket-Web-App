@@ -23,6 +23,7 @@ class BracketDetailView(DetailView):
     def get_context_data(self, **kwargs):
         return super().get_context_data(**kwargs)
 
+
 class BracketCreateView(LoginRequiredMixin, CreateView):
     form_class = BracketCreateForm
     template_name = 'Bracket/form.html'
