@@ -11,12 +11,9 @@
         {{team}}<br>
     {% endfor %}
     <br>
-    <h3>Rounds</h3>
-    {% for round in object.rounds.all %}
-        {{round}}<br>
-    {% endfor %}
-    <br>
+    {% if object.hasBeenGenerated is False%}
     <a href="/bracketz/generate/{{object.slug}}">Generate Bracket</a>
+    {%endif%}
 </p>
 
 <h1>{{ object.name }}</h1>
@@ -25,108 +22,18 @@
 <p>
     <br>
     <main id="tournament">
-    <ul class="round round-1">
+    {% for round in object.rounds.all %}
+    <ul class="round {{round}}">
         <li class="spacer">&nbsp;</li>
-        
-        <li class="game game-top">{{object.teams.all.0}}</li>
+        {% for match in round.matches.all %}
+        <li class="game game-top">{% if match.team1 == None %}<br>{% else %}{{match.team1}}{% endif %}</li>
         <li class="game game-spacer">&nbsp;</li>
-        <li class="game game-bottom ">{{object.teams.all.1}}</li>
+        <li class="game game-bottom ">{% if match.team2 == None %}<br>{% else %}{{match.team2}}{% endif %}</li>
 
         <li class="spacer">&nbsp;</li>
-        
-        <li class="game game-top">{{object.teams.all.2}}</li>
-        <li class="game game-spacer">&nbsp;</li>
-        <li class="game game-bottom ">{{object.teams.all.3}}</li>
-
-        <li class="spacer">&nbsp;</li>
-        
-        <li class="game game-top ">{{object.teams.all.4}}</li>
-        <li class="game game-spacer">&nbsp;</li>
-        <li class="game game-bottom">{{object.teams.all.5}}</li>
-
-        <li class="spacer">&nbsp;</li>
-        
-        <li class="game game-top">{{object.teams.all.6}}</li>
-        <li class="game game-spacer">&nbsp;</li>
-        <li class="game game-bottom ">{{object.teams.all.7}}</li>
-
-        <li class="spacer">&nbsp;</li>
-        
-        <li class="game game-top">{{object.teams.all.8}}</li>
-        <li class="game game-spacer">&nbsp;</li>
-        <li class="game game-bottom ">{{object.teams.all.9}}</li>
-
-        <li class="spacer">&nbsp;</li>
-        
-        <li class="game game-top">{{object.teams.all.10}}</li>
-        <li class="game game-spacer">&nbsp;</li>
-        <li class="game game-bottom ">{{object.teams.all.11}}</li>
-
-        <li class="spacer">&nbsp;</li>
-        
-        <li class="game game-top">{{object.teams.all.12}}</li>
-        <li class="game game-spacer">&nbsp;</li>
-        <li class="game game-bottom ">{{object.teams.all.13}}</li>
-
-        <li class="spacer">&nbsp;</li>
-        
-        <li class="game game-top">{{object.teams.all.14}}</li>
-        <li class="game game-spacer">&nbsp;</li>
-        <li class="game game-bottom ">{{object.teams.all.15}}</li>
-
-        <li class="spacer">&nbsp;</li>
+        {%endfor%}
     </ul>
-    <ul class="round round-2">
-        <li class="spacer">&nbsp;</li>
-        
-        <li class="game game-top"><br> </li>
-        <li class="game game-spacer">&nbsp;</li>
-        <li class="game game-bottom "><br> </li>
-
-        <li class="spacer">&nbsp;</li>
-        
-        <li class="game game-top"><br> </li>
-        <li class="game game-spacer">&nbsp;</li>
-        <li class="game game-bottom "><br> </li>
-
-        <li class="spacer">&nbsp;</li>
-        
-        <li class="game game-top "><br> </li>
-        <li class="game game-spacer">&nbsp;</li>
-        <li class="game game-bottom "><br> </li>
-
-        <li class="spacer">&nbsp;</li>
-        
-        <li class="game game-top "><br> </li>
-        <li class="game game-spacer">&nbsp;</li>
-        <li class="game game-bottom "><br> </li>
-
-        <li class="spacer">&nbsp;</li>
-    </ul>
-    <ul class="round round-3">
-        <li class="spacer">&nbsp;</li>
-        
-        <li class="game game-top "><br> </li>
-        <li class="game game-spacer">&nbsp;</li>
-        <li class="game game-bottom "> <br> </li>
-
-        <li class="spacer">&nbsp;</li>
-        
-        <li class="game game-top "><br> </li>
-        <li class="game game-spacer">&nbsp;</li>
-        <li class="game game-bottom "><br> </li>
-
-        <li class="spacer">&nbsp;</li>
-    </ul>
-    <ul class="round round-4">
-        <li class="spacer">&nbsp;</li>
-        
-        <li class="game game-top "><br> </li>
-        <li class="game game-spacer">&nbsp;</li>
-        <li class="game game-bottom "><br> </li>
-        
-        <li class="spacer">&nbsp;</li>
-    </ul>       
+    {%endfor%}       
 </main>
     <br>
 </p>
