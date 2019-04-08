@@ -47,20 +47,34 @@ def bracket_gen(request, **kwargs):
 
     teamNum = 0
     for round in range(num_of_rounds):
-        count = count//2
+        if count %2 == 0:
+            count = count//2
+        else:
+            count = (count//2) +1
         new_round = Round(num = round+1)
         new_round.save()
+        match_num = 0
         if round == 0:
             for matches in range(count):
-                match = Match(team1 = regTeams[teamNum], team2 = regTeams[teamNum + 1])
+                print(matches == count)
+                print(matches)
+                if matches == count -1:
+                    if count % 2 != 0:
+                        print("single match")
+                        match = Match(team1 = regTeams[teamNum], matchNum = match_num)
+                else:
+                    match = Match(team1 = regTeams[teamNum], team2 = regTeams[teamNum + 1], matchNum = match_num)
                 match.save()
                 teamNum = teamNum + 2
+                match_num = match_num + 1
                 new_round.matches.add(match)
         else:
             for matches in range(count):
-                match = Match()
+                match = Match(matchNum = match_num)
                 match.save()
+                match_num = match_num + 1
                 new_round.matches.add(match)
+
         new_round.save()
         qs.rounds.add(new_round)
 
@@ -69,11 +83,30 @@ def bracket_gen(request, **kwargs):
     return  HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
-def divide(arr, depth, m, complements):
-    if len(complements) <= depth:
-        complements.append(2 ** (depth + 2) + 1)
-    complement = complements[depth]
-    for i in range(2):
-        if complement - arr[i] <= m:
-            arr[i] = [arr[i], complement - arr[i]]
-            divide(arr[i], depth + 1, m, complements)
+def advance_team(request, **kwargs):
+    bracket = Bracket.objects.get(slug=kwargs['slug'])
+    roundFind = int(kwargs['roundNum'])
+    match_num = int(kwargs['matchNum'])
+    winTeam = Team.objects.get(slug=kwargs['winTeam'])
+    rounds = bracket.rounds.all()
+    for round in rounds:
+        if round.num == roundFind:
+            print("here")
+            for match in round.matches.all():
+                print(match.matchNum)
+                if match.matchNum == match_num:
+                    print(round)
+                    match.winningTeam = winTeam
+                    match.save()
+        elif round.num == roundFind + 1:
+            for match in round.matches.all():
+                if match.matchNum == match_num//2:
+                    if match_num % 2 == 0:
+                        match.team1 = winTeam
+                    else:
+                        match.team2 = winTeam
+                    match.save()
+        round.save()
+    bracket.save()
+
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])

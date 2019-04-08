@@ -11,6 +11,8 @@ from RegisteredTeams.models import Team
 class Match(models.Model):
     team1 = models.ForeignKey(Team, related_name='+', blank=True, null=True)
     team2 = models.ForeignKey(Team, related_name='+', blank=True, null=True)
+    winningTeam = models.ForeignKey(Team, related_name='+', blank=True, null=True)
+    matchNum = models.IntegerField(null=True, blank=True)
 
 class Round(models.Model):
     matches = models.ManyToManyField(Match, blank=True)
@@ -40,18 +42,16 @@ class Bracket(models.Model):
     @property
     def title(self):
         return self.name
-    
+
 
 def rl_pre_save_reciever(sender, instance, *args, **kwargs):
     print("saving...")
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
-    
+
 def rl_post_save_reciever(sender, instance, *args, **kwargs):
     print("saved")
 
 pre_save.connect(rl_pre_save_reciever, sender=Bracket)
 
 post_save.connect(rl_post_save_reciever, sender=Bracket)
-    
- 
