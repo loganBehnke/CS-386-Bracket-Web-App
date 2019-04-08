@@ -31,6 +31,7 @@ class Bracket(models.Model):
     rounds = models.ManyToManyField(Round, blank=True)
     slug = models.SlugField(unique=True, blank=True, null=True)
     teams = models.ManyToManyField(Team, blank=True)
+    winningTeam = models.ForeignKey(Team, related_name='+', blank=True, null=True)
     hasBeenGenerated = models.BooleanField(null=False, blank=False, default=False)
 
     def __str__(self):

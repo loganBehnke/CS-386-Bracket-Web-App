@@ -56,12 +56,8 @@ def bracket_gen(request, **kwargs):
         match_num = 0
         if round == 0:
             for matches in range(count):
-                print(matches == count)
-                print(matches)
-                if matches == count -1:
-                    if count % 2 != 0:
-                        print("single match")
-                        match = Match(team1 = regTeams[teamNum], matchNum = match_num)
+                if matches == count - 1 and count % 2 != 0:
+                    match = Match(team1 = regTeams[teamNum], matchNum = match_num)
                 else:
                     match = Match(team1 = regTeams[teamNum], team2 = regTeams[teamNum + 1], matchNum = match_num)
                 match.save()
@@ -89,13 +85,15 @@ def advance_team(request, **kwargs):
     match_num = int(kwargs['matchNum'])
     winTeam = Team.objects.get(slug=kwargs['winTeam'])
     rounds = bracket.rounds.all()
+    totalNumRounds = rounds.count()
+    print(totalNumRounds)
+    print(roundFind)
+    if totalNumRounds == roundFind:
+        bracket.winningTeam = winTeam
     for round in rounds:
         if round.num == roundFind:
-            print("here")
             for match in round.matches.all():
-                print(match.matchNum)
                 if match.matchNum == match_num:
-                    print(round)
                     match.winningTeam = winTeam
                     match.save()
         elif round.num == roundFind + 1:

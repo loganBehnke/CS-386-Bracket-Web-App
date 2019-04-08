@@ -54,6 +54,13 @@
         {%endfor%}
     </ul>
     {%endfor%}
+    <ul class="round">
+      <li class="spacer">&nbsp;</li>
+      <li class="game game-top">{% if object.winningTeam == None %}
+          <br>
+      {% else %}{{object.winningTeam}}{%endif%}</li>
+      <li class="spacer">&nbsp;</li>
+    </ul>
     </main>
     <br>
 </div>
