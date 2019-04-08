@@ -9,12 +9,20 @@ from RegisteredTeams.models import Team
 
 
 class Match(models.Model):
-    team1 = models.ForeignKey(Team, related_name='+')
-    team2 = models.ForeignKey(Team, related_name='+')
+    team1 = models.ForeignKey(Team, related_name='+', blank=True, null=True)
+    team2 = models.ForeignKey(Team, related_name='+', blank=True, null=True)
+    winningTeam = models.ForeignKey(Team, related_name='+', blank=True, null=True)
 
 class Round(models.Model):
     matches = models.ManyToManyField(Match, blank=True)
     num = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return "Round " + str(self.num)
+
+    @property
+    def title(self):
+        return "Round " + str(self.num)
 
 class Bracket(models.Model):
     name = models.CharField(max_length=60, null=False, blank=False)
@@ -22,6 +30,7 @@ class Bracket(models.Model):
     rounds = models.ManyToManyField(Round, blank=True)
     slug = models.SlugField(unique=True, blank=True, null=True)
     teams = models.ManyToManyField(Team, blank=True)
+    hasBeenGenerated = models.BooleanField(null=False, blank=False, default=False)
 
     def __str__(self):
         return self.name

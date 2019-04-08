@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'Bracket/bracket_base.html' %}
 {% block head_title %}Brackets || {{ block.super }}{% endblock head_title %}
 
 {%block content%}
@@ -11,5 +11,31 @@
         {{team}}<br>
     {% endfor %}
     <br>
+    {% if object.hasBeenGenerated is False%}
+    <a href="/bracketz/generate/{{object.slug}}">Generate Bracket</a>
+    {%endif%}
 </p>
+
+<h1>{{ object.name }}</h1>
+<!--<a href="/bracketz/join-bracketz/{{object.slug}}" class="btn btn-default">Join Bracket</a> TODO in future realese -->
+{% if object.hasBeenGenerated is True%}
+<p>
+    <br>
+    <main id="tournament">
+    {% for round in object.rounds.all %}
+    <ul class="round {{round}}">
+        <li class="spacer">&nbsp;</li>
+        {% for match in round.matches.all %}
+        <li class="game game-top">{% if match.team1 == None %}<br>{% else %}{{match.team1}}{% endif %}</li>
+        <li class="game game-spacer">&nbsp;</li>
+        <li class="game game-bottom ">{% if match.team2 == None %}<br>{% else %}{{match.team2}}{% endif %}</li>
+
+        <li class="spacer">&nbsp;</li>
+        {%endfor%}
+    </ul>
+    {%endfor%}       
+</main>
+    <br>
+</p>
+{%endif%}
 {%endblock content%}

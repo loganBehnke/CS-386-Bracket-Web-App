@@ -2,6 +2,8 @@
 {% block head_title %}Welcome || {{ block.super }}{% endblock head_title%}
 
 {% block content%}
-<h2><a href='{% url "register" %}'>Sign-Up</a> to become a player and join a team.</h1>
-<h2>Search Brackets</h1>
+
+<h2><a href='{% url "register" %}'>Sign-Up</a> to become a <a href='{% url "players" %}'>player</a> and join a <a href='{% url "teams" %}'>team</a>.</h2>
+<h2><a href='{% url "bracketz"%}'>Search Brackets</a></h2>
+
 {% endblock content%}
