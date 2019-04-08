@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block head_title %}Teams || {{ block.super }}{% endblock head_title %}
+
+{%block content%}
+<h1>{{ object.name }}</h1>
+<p>
+    TeamCaptin: <a href="/players/{{object.teamCaptin}}">{{object.teamCaptin}}</a><br>
+
+    <br>
+    Players<br>
+    {% for player in object.players.all %}
+        {{player}}<br>
+    {% endfor %}
+    <br>
+    
+    <a href="/teams/join-team/{{object.slug}}" class="btn btn-default">Join Team</a>
+
+</p>
+{%endblock content%}

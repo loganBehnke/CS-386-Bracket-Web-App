@@ -8,7 +8,7 @@ from math import ceil, sqrt, log
 
 from .models import Bracket, Match, Round
 from player.models import Player
-from RegisteredTeams.models import Team
+from team.models import Team
 
 from .forms import BracketCreateForm, JoinBracketForm
 

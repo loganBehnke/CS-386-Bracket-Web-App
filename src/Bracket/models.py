@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 
 from .utils import unique_slug_generator
 
-from RegisteredTeams.models import Team
+from team.models import Team
 
 
 class Match(models.Model):
