@@ -39,11 +39,10 @@ def join_bracketz(request, **kwargs):
 def bracket_gen(request, **kwargs):
     qs = Bracket.objects.get(slug=kwargs['slug'])
     regTeams = qs.teams.all()
-    print(regTeams)
     count = regTeams.count()
-
+    num_of_teams = count
     num_of_rounds = ceil(log(count, 2))
-    print(num_of_rounds)
+
 
     teamNum = 0
     for round in range(num_of_rounds):
@@ -56,7 +55,7 @@ def bracket_gen(request, **kwargs):
         match_num = 0
         if round == 0:
             for matches in range(count):
-                if matches == count - 1 and count % 2 != 0:
+                if matches == count - 1 and num_of_teams % 2 != 0:
                     match = Match(team1 = regTeams[teamNum], matchNum = match_num)
                 else:
                     match = Match(team1 = regTeams[teamNum], team2 = regTeams[teamNum + 1], matchNum = match_num)
