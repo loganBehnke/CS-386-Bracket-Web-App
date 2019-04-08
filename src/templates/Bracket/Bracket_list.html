@@ -3,11 +3,11 @@
 
 {%block content%}
 <h1>Bracket List</h1>
-<p>Want to <a herf="">create your own bracket?</a></p>
+<p>Want to <a href='{% url "bracketz-creation" %}'>create your own bracket?</a></p>
 <p></p>
 <ul>
     {% for obj in object_list %}
-        <li><a href="/Brackets/{{ obj.slug }}/">{{obj}}</a></li>
+        <li><a href="/bracketz/{{ obj.slug }}/">{{obj}}</a></li>
     {%endfor%}
 </ul>
 {%endblock content%}
