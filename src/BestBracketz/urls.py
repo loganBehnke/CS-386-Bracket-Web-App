@@ -21,7 +21,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 
 from Bracket.views import BracketListView, BracketDetailView, BracketCreateView, join_bracketz, bracket_gen, advance_team
 from player.views import PlayerListView, PlayerDetailView, RegisterView, PlayerCreateView
-from RegisteredTeams.views import TeamDetailView, TeamListView, TeamCreateView, join_team
+from team.views import TeamDetailView, TeamListView, TeamCreateView, join_team
 
 
 urlpatterns = [
