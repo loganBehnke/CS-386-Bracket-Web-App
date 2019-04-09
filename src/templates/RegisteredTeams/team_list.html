@@ -2,7 +2,6 @@
 {% block head_title %}Teams || {{ block.super }}{% endblock head_title %}
 
 {%block content%}
-<div id="teams" class="container tab-pane active"></div>
 <h1>Team List</h1>
 <p>Must be a registered <a href = '{% url "player-sign-up" %}'>player</a> to join a team.<br>
     Already have a team? Sign-up <a href = '{% url "teams-sign-up" %}'>here</a>.
@@ -14,5 +13,4 @@
         <li><a href="/teams/{{ obj.slug }}/">{{obj}}</a></li>
     {%endfor%}
 </ul>
-</div>
 {%endblock content%}
