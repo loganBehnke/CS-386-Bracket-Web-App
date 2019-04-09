@@ -38,9 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'team',
     'player',
-    'RegisteredTeams',
-    'Bracket'
+    'Bracket',
+    'django_user_agents',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = 'BestBracketz.urls'
@@ -125,4 +127,4 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = "/static/"
+STATIC_URL = '/static/'

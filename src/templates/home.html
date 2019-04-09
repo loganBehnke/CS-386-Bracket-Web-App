@@ -2,6 +2,16 @@
 {% block head_title %}Welcome || {{ block.super }}{% endblock head_title%}
 
 {% block content%}
-<h2><a href='{% url "register" %}'>Sign-Up</a> to become a <a href='{% url "players" %}'>player</a> and join a <a href='{% url "teams" %}'>team</a>.</h1>
-<h2><a href='{% url "bracketz"%}'>Search Brackets</a></h1>
+
+    <div class ="jumbotron text-center">
+        <h1>BestBracketz</h1>
+        <p>The best soulution for bracket generation.</p>
+        <p>
+            <a class="btn btn-primary btn-lg" href='{% url "bracketz"%}'>Search Existing Brackets</a>
+        </p>
+    </div>
+
+    <div class ="jumbotron text-center">
+            <h2><a href='{% url "register" %}'>Sign-Up</a> to become a <a href='{% url "players" %}'>player</a> and join a <a href='{% url "teams" %}'>team</a>.</h2>
+        </div>
 {% endblock content%}
