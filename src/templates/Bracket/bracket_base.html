@@ -5,7 +5,7 @@
     <title>{% block head_title %}BestBrackets{% endblock head_title%}</title>
     {% include 'snippets/css.html' %}
     <style>
-        #tournament{
+      #tournament{
       display:flex;
       flex-direction:row;
     }
@@ -23,20 +23,13 @@
       .round .game-spacer{
         flex-grow:1;
       }
-    /*
-     *  General Styles
-    */
-    body{
-      font-family:sans-serif;
-      font-size:small;
-      padding:10px;
-      line-height:1.4em;
-    }
+
     li.game{
       padding-left:20px;
     }
       li.game.winner{
         font-weight:bold;
+        text-decoration: underline;
       }
       li.game span{
         float:right;
@@ -45,6 +38,9 @@
       li.game-top{ border-bottom:1px solid #aaa; }
       li.game-spacer{
         border-right:1px solid #aaa;
+        min-height:40px;
+      }
+      li.bye-spacer{
         min-height:40px;
       }
       li.game-bottom{
@@ -58,9 +54,13 @@
 
 <body>
     {% include 'snippets/nav.html' %}
+    {% include 'snippets/messages.html' %}
 
-    <div class="container">
-        {%block content%}{%endblock content%}
+    <div class="container h-100">
+        <div class="row align-items-center h-100">
+
+            <div class="col mx-auto">{%block content%}{%endblock content%}</div>
+        </div>
     </div>
 
     {% include 'snippets/js.html' %}

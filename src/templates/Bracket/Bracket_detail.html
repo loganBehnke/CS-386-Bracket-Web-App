@@ -6,19 +6,8 @@
 
 <h1>{{ object.name }}</h1>
 <!--<a href="/bracketz/join-bracketz/{{object.slug}}" class="btn btn-default">Join Bracket</a> TODO in future realese -->
-<p>
-    <br>
-    <h3>Registered Teams</h3>
-    {% for team in object.teams.all %}
-        {{team}}<br>
-    {% endfor %}
-    <br>
-    {% if object.hasBeenGenerated is False%}
-    <a href="/bracketz/generate/{{object.slug}}">Generate Bracket</a>
-    {%endif%}
-</p>
 
-<h1>{{ object.name }}</h1>
+
 <!--<a href="/bracketz/join-bracketz/{{object.slug}}" class="btn btn-default">Join Bracket</a> TODO in future realese -->
 {% if object.hasBeenGenerated is True%}
 <div>
@@ -28,12 +17,17 @@
     <ul class="round {{round}}">
         <li class="spacer">&nbsp;</li>
         {% for match in round.matches.all %}
+        {% if match.isByeMatch == True %}
+        <li><br></li>
+        <li class="game bye-spacer">&nbsp;</li>
+        <li><br></li>
+        {%else%}
         <li class="game game-top">
             {% if match.team1 == None %}
                 <br>
             {% else %}
                 <a href= "/bracketz/advanceTeam/{{object.slug}}/{{match.team1.slug}}/{{match.matchNum}}/{{round.num}}"
-                        {% if match.winningTeam != null %} style="pointer-events: none; cursor: default; color: black; {%if match.winningTeam == match.team1%} font-size: 16pt; font-weight: bold{%endif%}" {%endif%}>
+                        {% if match.winningTeam != null %} style="pointer-events: none; cursor: default; color: black; {%if match.winningTeam == match.team1%}  text-decoration: underline; font-weight: bold{%endif%}" {%endif%}>
                     {{match.team1}}
                 </a>
             {% endif %}
@@ -44,11 +38,12 @@
                 <br>
             {% else %}
                 <a href= "/bracketz/advanceTeam/{{object.slug}}/{{match.team2.slug}}/{{match.matchNum}}/{{round.num}}"
-                        {% if match.winningTeam != null %} style="pointer-events: none; cursor: default; color: black; {%if match.winningTeam == match.team2%} font-size: 16pt; font-weight: bold{%endif%}" {%endif%}>
+                        {% if match.winningTeam != null %} style="pointer-events: none; cursor: default; color: black; {%if match.winningTeam == match.team2%}  text-decoration: underline; font-weight: bold{%endif%}" {%endif%}>
                     {{match.team2}}
                 </a>
             {% endif %}
         </li>
+        {%endif%}
 
         <li class="spacer">&nbsp;</li>
         {%endfor%}
@@ -56,7 +51,7 @@
     {%endfor%}
     <ul class="round">
       <li class="spacer">&nbsp;</li>
-      <li class="game game-top">{% if object.winningTeam == None %}
+      <li class="game game-top winner">{% if object.winningTeam == None %}
           <br>
       {% else %}{{object.winningTeam}}{%endif%}</li>
       <li class="spacer">&nbsp;</li>
@@ -65,4 +60,25 @@
     <br>
 </div>
 {%endif%}
+<div>
+    <br>
+    <h3>Registered Teams</h3>
+    <table class='table table-striped'>
+    {% for team in object.teams.all %}
+        {% cycle 'row' '' 'row3' as row silent%}
+        {% if row == 'row '%}<tr>{% endif %}
+            <td>
+                <a href= '/teams/{{team.slug}}/'>
+                {{team}}
+                </a>
+            </td>
+        {% if row == 'row3' %}</tr>{% endif %}
+    {% endfor %}
+    </table>
+    <br>
+    {% if object.hasBeenGenerated is False%}
+    <a href="/bracketz/generate/{{object.slug}}" class="btn btn-primary btn-lg">Start Tournament</a>
+    {%endif%}
+</div>
+
 {%endblock content%}
