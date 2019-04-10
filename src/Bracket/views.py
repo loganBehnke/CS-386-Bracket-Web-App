@@ -42,7 +42,7 @@ def bracket_gen(request, **kwargs):
     regTeams = qs.teams.all()
     num_of_teams = regTeams.count()
     if num_of_teams < qs.minNumOfTeams:
-        messages.error(request, 'The minimum number of teams is not meet')
+        messages.error(request, 'The minimum number of teams is not meet. There needs to be at least ' + str(qs.minNumOfTeams) +' to start the tournament')
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
     num_of_rounds = ceil(log(num_of_teams, 2))
     num_of_matches = pow(2, num_of_rounds)
