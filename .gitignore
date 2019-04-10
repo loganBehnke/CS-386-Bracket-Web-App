@@ -103,3 +103,10 @@ venv.bak/
 # mypy
 .mypy_cache/
 src/db.sqlite3
+.DS_Store
+src/.DS_Store
+src/BestBracketz/.DS_Store
+src/Bracket/.DS_Store
+src/core/.DS_Store
+src/player/.DS_Store
+src/templates/.DS_Store
