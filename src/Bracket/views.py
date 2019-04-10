@@ -5,6 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from math import ceil, sqrt, log
+from django.contrib import messages
 
 from .models import Bracket, Match, Round
 from player.models import Player
@@ -35,11 +36,14 @@ class BracketCreateView(LoginRequiredMixin, CreateView):
 def join_bracketz(request, **kwargs):
     print("Joining Bracket")
 
-
+@login_required
 def bracket_gen(request, **kwargs):
     qs = Bracket.objects.get(slug=kwargs['slug'])
     regTeams = qs.teams.all()
     num_of_teams = regTeams.count()
+    if num_of_teams < qs.minNumOfTeams:
+        messages.error(request, 'The minimum number of teams is not meet')
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
     num_of_rounds = ceil(log(num_of_teams, 2))
     num_of_matches = pow(2, num_of_rounds)
     bytes = num_of_matches - num_of_teams
@@ -94,7 +98,7 @@ def bracket_gen(request, **kwargs):
     qs.save()
     return  HttpResponseRedirect(request.META['HTTP_REFERER'])
 
-
+@login_required
 def advance_team(request, **kwargs):
     bracket = Bracket.objects.get(slug=kwargs['slug'])
     roundFind = int(kwargs['roundNum'])

@@ -64,11 +64,12 @@
     <br>
     <h3>Registered Teams</h3>
     {% for team in object.teams.all %}
-        {{team}}<br>
+        <a href= '/teams/{{team.slug}}/'>
+        {{team}}</a><br>
     {% endfor %}
     <br>
     {% if object.hasBeenGenerated is False%}
-    <a href="/bracketz/generate/{{object.slug}}">Generate Bracket</a>
+    <a href="/bracketz/generate/{{object.slug}}">Start Tournament</a>
     {%endif%}
 </p>
 
