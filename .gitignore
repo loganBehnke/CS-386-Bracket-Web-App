@@ -103,3 +103,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 src/db.sqlite3
+
+#Mac file
+.DS_Store
