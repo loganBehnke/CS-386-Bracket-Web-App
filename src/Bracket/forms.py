@@ -24,5 +24,9 @@ class JoinBracketForm(forms.ModelForm):
     class Meta:
         model = Bracket
         fields = [
-            'teams',
+            'teams'
         ]
+    def __init__(self, user=None, *args, **kwargs):
+        super(JoinBracketForm, self).__init__(*args, **kwargs)
+        bracket = kwargs['instance']
+        self.fields['teams'].queryset = Team.objects.all().exclude(bracket= bracket).filter(teamCaptin=user)

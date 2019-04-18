@@ -63,7 +63,7 @@
 <div>
     <br>
     <h3>Registered Teams</h3>
-    <table class='table table-striped'>
+    <table class='table table-striped table-bordered'>
     {% for team in object.teams.all %}
         {% cycle 'row' '' 'row3' as row silent%}
         {% if row == 'row '%}<tr>{% endif %}
@@ -78,6 +78,7 @@
     <br>
     {% if object.hasBeenGenerated is False%}
     <a href="/bracketz/generate/{{object.slug}}" class="btn btn-primary btn-lg">Start Tournament</a>
+    <a href="/bracketz/join/{{object.slug}}/" class='btn btn-primary btn-lg'>Join Tournament</a>
     {%endif%}
 </div>
 
