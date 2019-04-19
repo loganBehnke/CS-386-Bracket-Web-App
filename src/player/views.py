@@ -23,10 +23,6 @@ class PlayerDetailView(DetailView):
         print(context["Teams"])
         
         return context
-    
-    #TODO search for player in team to list
-    #instance = queryset.account
-    #teams = instace.team_set.all()
 
 class PlayerCreateView(LoginRequiredMixin, CreateView):
     form_class = PlayerCreateForm
