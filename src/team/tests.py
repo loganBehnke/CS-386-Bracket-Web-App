@@ -2,8 +2,8 @@ from django.test import TestCase
 from team.models import Team
 from django.core.urlresolvers import reverse
 from django.contrib.auth.admin import User
-from player.forms import TeamCreateForm, JoinTeamForm
-from player.views import TeamListView
+from team.forms import TeamCreateForm, JoinTeamForm
+from team.views import TeamListView
 
 # Create your tests here.
 class TeamTest(TestCase):
@@ -15,4 +15,4 @@ class TeamTest(TestCase):
         t = self.create_team()
         self.assertTrue(isinstance(t, Team))
         self.assertEqual(t.name, 'testTeam')
-        
+
