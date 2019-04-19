@@ -36,6 +36,7 @@ class BracketUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'Bracket/form.html'
     success_url = '/bracketz/'
 
+
     def get_form_kwargs(self):
         kwargs = super(BracketUpdateView, self).get_form_kwargs()
         user = self.request.user
@@ -53,6 +54,10 @@ def join_bracketz(request, **kwargs):
         userPlayer = Player.objects.get(account=user)
         print(userPlayer)
         teamsNotInBracket = Team.objects.all().exclude(bracket= bracket).filter(teamCaptin=userPlayer)
+        print(teamsNotInBracket.cout())
+        if teamsNotInBracket.cout() == 0:
+            message.warning(request, 'you have no teams to register for this tournament.')
+            return HttpResponseRedirect(request.META['HTTP_REFERER'])
         print(teamsNotInBracket)
     except Player.DoesNotExist:
         messages.warning(request, "You need to be a Player to join a bracket.")
