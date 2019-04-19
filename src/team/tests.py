@@ -45,9 +45,9 @@ class TeamTest(TestCase):
         self.assertTrue(form.is_valid())
 
     def test_join_team_form(self):
-        user = User.objects.create_user(username='testuser', password='12345')
-        player = Player.objects.create(account=user, gameName = 'testPlayer')
-        t = self.create_team()
-        data = {'players': player}
-        form = t.JoinTeamForm(data)
-        self.assertTrue(form.is_valid())
+            user = User.objects.create_user(username='testuser3', password='12345')
+            player = Player.objects.create(account=user, gameName = 'testPlayer')
+            t = self.create_team()
+            data = {'players': player}
+            form = JoinTeamForm(data)
+            self.assertTrue(form.is_valid())
