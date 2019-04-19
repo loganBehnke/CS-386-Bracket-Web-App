@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView, CreateView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
 from math import ceil, sqrt, log
 
 from .models import Bracket, Match, Round
@@ -29,11 +29,39 @@ class BracketCreateView(LoginRequiredMixin, CreateView):
     template_name = 'Bracket/form.html'
     success_url = '/bracketz/'
 
+class BracketUpdateView(LoginRequiredMixin, UpdateView):
+    model = Bracket
+    form_class = JoinBracketForm
+    template_name = 'Bracket/form.html'
+    success_url = '/bracketz/'
+
+
+    def get_form_kwargs(self):
+        kwargs = super(BracketUpdateView, self).get_form_kwargs()
+        user = self.request.user
+        userPlayer = Player.objects.get(account=user)
+        kwargs['user'] = userPlayer
+        return kwargs
 
 #TODO in future verison
 @login_required
 def join_bracketz(request, **kwargs):
     print("Joining Bracket")
+    bracket = Bracket.objects.get(slug=kwargs['slug'])
+    user = request.user
+    try:
+        userPlayer = Player.objects.get(account=user)
+        print(userPlayer)
+        teamsNotInBracket = Team.objects.all().exclude(bracket= bracket).filter(teamCaptin=userPlayer)
+        print(teamsNotInBracket.cout())
+        if teamsNotInBracket.cout() == 0:
+            message.warning(request, 'you have no teams to register for this tournament.')
+            return HttpResponseRedirect(request.META['HTTP_REFERER'])
+        print(teamsNotInBracket)
+    except Player.DoesNotExist:
+        messages.warning(request, "You need to be a Player to join a bracket.")
+        return HttpResponseRedirect('/players/sign-up')
+
 
 
 def bracket_gen(request, **kwargs):
