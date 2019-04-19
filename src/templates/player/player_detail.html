@@ -7,7 +7,12 @@
 <p>
     Teams<br>
     <br>
-    TODO
+    {% for team in Teams %}
+    <li>
+        {{team}}
+    </li>
+
+{%endfor%}
 
 </p>
 {%endblock content%}
