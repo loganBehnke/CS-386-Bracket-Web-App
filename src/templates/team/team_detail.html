@@ -4,7 +4,7 @@
 {%block content%}
 <h1>{{ object.name }}</h1>
 <p>
-    TeamCaptin: <a href="/players/{{object.teamCaptin}}">{{object.teamCaptin}}</a><br>
+    TeamCaptin: <a href="/players/{{object.teamCaptin.slug}}">{{object.teamCaptin}}</a><br>
 
     <br>
     Players<br>
@@ -13,8 +13,7 @@
     {% endfor %}
     <br>
     
-
-    <a href="/teams/join-team/{{object.slug}}" class="btn btn-primary">Join Team</a>
+    <a href="/teams/join-team/{{object.slug}}" class="btn btn-default">Join Team</a>
 
     <div>
         Match Wins: {{MatchWins}}
@@ -22,4 +21,5 @@
         Tournament Wins: {{TournamentWins}}
     </div>
 </p>
+
 {%endblock content%}
