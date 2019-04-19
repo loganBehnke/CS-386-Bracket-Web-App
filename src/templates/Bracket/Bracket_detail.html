@@ -6,20 +6,6 @@
 
 <h1>{{ object.name }}</h1>
 <!--<a href="/bracketz/join-bracketz/{{object.slug}}" class="btn btn-default">Join Bracket</a> TODO in future realese -->
-<p>
-    <br>
-    <h3>Registered Teams</h3>
-    {% for team in object.teams.all %}
-        {{team}}<br>
-    {% endfor %}
-    <br>
-    {% if object.hasBeenGenerated is False%}
-    <a href="/bracketz/generate/{{object.slug}}">Generate Bracket</a>
-    {%endif%}
-</p>
-
-<h1>{{ object.name }}</h1>
-<!--<a href="/bracketz/join-bracketz/{{object.slug}}" class="btn btn-default">Join Bracket</a> TODO in future realese -->
 {% if object.hasBeenGenerated is True%}
 <div>
     <br>
@@ -65,4 +51,28 @@
     <br>
 </div>
 {%endif%}
+
+<div>
+    <br>
+    <h3>Registered Teams</h3>
+    <table class='table table-striped table-bordered'>
+    {% for team in object.teams.all %}
+        {% cycle 'row' '' 'row3' as row silent%}
+        {% if row == 'row '%}<tr>{% endif %}
+            <td>
+                <a href= '/teams/{{team.slug}}/'>
+                {{team}}
+                </a>
+            </td>
+        {% if row == 'row3' %}</tr>{% endif %}
+    {% endfor %}
+    </table>
+    <br>
+    {% if object.hasBeenGenerated is False%}
+    <a href="/bracketz/generate/{{object.slug}}" class="btn btn-primary btn-lg">Start Tournament</a>
+    <a href="/bracketz/join/{{object.slug}}/" class='btn btn-primary btn-lg'>Join Tournament</a>
+    {%endif%}
+</div>
+
+
 {%endblock content%}

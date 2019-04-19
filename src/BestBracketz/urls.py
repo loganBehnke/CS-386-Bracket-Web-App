@@ -19,7 +19,7 @@ from django.views.generic import TemplateView
 
 from django.contrib.auth.views import LoginView, LogoutView
 
-from Bracket.views import BracketListView, BracketDetailView, BracketCreateView, join_bracketz, bracket_gen, advance_team
+from Bracket.views import BracketListView, BracketDetailView, BracketCreateView, join_bracketz, bracket_gen, advance_team, BracketUpdateView
 from player.views import PlayerListView, PlayerDetailView, RegisterView, PlayerCreateView
 from team.views import TeamDetailView, TeamListView, TeamCreateView, join_team
 
@@ -39,9 +39,9 @@ urlpatterns = [
     url(r'^players/(?P<slug>[\w-]+)/$', PlayerDetailView.as_view()),
     url(r'^bracketz/$', BracketListView.as_view(), name='bracketz'),
     url(r'^bracketz/creation/$', BracketCreateView.as_view(), name='bracketz-creation'),
+    url(r'^bracketz/join/(?P<slug>[\w-]+)/$', BracketUpdateView.as_view(), name='bracket-join'),
     url(r'^bracketz/(?P<slug>[\w-]+)/$', BracketDetailView.as_view()),
     url(r'^bracketz/generate/(?P<slug>[\w-]+)/$', bracket_gen),
-    #url(r'^bracketz/join-bracketz/(?P<slug>[\w-]+)/$', join_bracketz), #TODO in future version
     url(r'^bracketz/advanceTeam/(?P<slug>[\w-]+)/(?P<winTeam>[\w-]+)/(?P<matchNum>[\w-]+)/(?P<roundNum>[\w-]+)/$', advance_team)
 
 ]
