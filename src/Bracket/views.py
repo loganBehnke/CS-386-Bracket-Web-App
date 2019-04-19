@@ -5,7 +5,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
 from math import ceil, sqrt, log
-from django.contrib import messages
 
 from .models import Bracket, Match, Round
 from player.models import Player
@@ -64,61 +63,41 @@ def join_bracketz(request, **kwargs):
         return HttpResponseRedirect('/players/sign-up')
 
 
-@login_required
+
 def bracket_gen(request, **kwargs):
     qs = Bracket.objects.get(slug=kwargs['slug'])
     regTeams = qs.teams.all()
-    num_of_teams = regTeams.count()
-    if num_of_teams < qs.minNumOfTeams:
-        messages.error(request, 'The minimum number of teams is not meet. There needs to be at least ' + str(qs.minNumOfTeams) +' to start the tournament')
-        return HttpResponseRedirect(request.META['HTTP_REFERER'])
-    num_of_rounds = ceil(log(num_of_teams, 2))
-    num_of_matches = pow(2, num_of_rounds)
-    bytes = num_of_matches - num_of_teams
-    matches_round_one = (num_of_teams - bytes)//2
-    num_of_matches = num_of_matches//2
+    count = regTeams.count()
+    num_of_teams = count
+    num_of_rounds = ceil(log(count, 2))
+
+
     teamNum = 0
     for round in range(num_of_rounds):
+        if count %2 == 0:
+            count = count//2
+        else:
+            count = (count//2) +1
         new_round = Round(num = round+1)
         new_round.save()
-        temp = matches_round_one
         match_num = 0
-        print(round)
         if round == 0:
-            for matches in range(num_of_matches):
-                if temp > 0:
-                    match = Match(team1 = regTeams[teamNum], team2 = regTeams[teamNum + 1], matchNum = match_num)
-                    temp = temp - 1
-                    teamNum = teamNum + 2
-                else:
-                    match = Match( matchNum = match_num, isByeMatch = True)
-                match.save()
-                match_num = match_num + 1
-                new_round.matches.add(match)
-        elif round == 1:
-            for matches in range(num_of_matches):
-                if temp == 1:
-                    print("here")
-                    match = Match( team2 = regTeams[teamNum], matchNum = match_num)
-                    teamNum = teamNum + 1
-                    temp = temp - 1
-                elif temp >= 2:
-                    match = Match(matchNum = match_num)
-                    temp = temp - 2
+            for matches in range(count):
+                if matches == count - 1 and num_of_teams % 2 != 0:
+                    match = Match(team1 = regTeams[teamNum], matchNum = match_num)
                 else:
                     match = Match(team1 = regTeams[teamNum], team2 = regTeams[teamNum + 1], matchNum = match_num)
-                    teamNum = teamNum + 2
                 match.save()
+                teamNum = teamNum + 2
                 match_num = match_num + 1
                 new_round.matches.add(match)
         else:
-            for matches in range(num_of_matches):
+            for matches in range(count):
                 match = Match(matchNum = match_num)
                 match.save()
                 match_num = match_num + 1
-
                 new_round.matches.add(match)
-        num_of_matches = num_of_matches//2
+
         new_round.save()
         qs.rounds.add(new_round)
 
@@ -126,7 +105,7 @@ def bracket_gen(request, **kwargs):
     qs.save()
     return  HttpResponseRedirect(request.META['HTTP_REFERER'])
 
-@login_required
+
 def advance_team(request, **kwargs):
     bracket = Bracket.objects.get(slug=kwargs['slug'])
     roundFind = int(kwargs['roundNum'])

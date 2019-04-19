@@ -1,9 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
+from django.contrib import messages
+
+from Bracket.models import Bracket, Match
 
 from .models import Team
 from player.models import Player
@@ -20,9 +23,15 @@ class TeamCreateView(LoginRequiredMixin , CreateView):
         instance = form.save(commit = False)
         user = self.request.user
         print(user)
-        obj = Player.objects.get(account=user)
-        instance.teamCaptin = obj
-        return super(TeamCreateView, self).form_valid(form)
+        try:
+            player = Player.objects.get(account=user)
+            instance.teamCaptin = player
+            return super(TeamCreateView, self).form_valid(form)
+        except Player.DoesNotExist:
+            messages.warning(self.request, "You need to be a Player to create a team.")
+            return HttpResponseRedirect('/players/sign-up')
+
+            
 
 
 class TeamListView(ListView):
@@ -34,7 +43,10 @@ class TeamDetailView(DetailView):
     queryset = Team.objects.all()
 
     def get_context_data(self, **kwargs):
-        return super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
+        context["MatchWins"] = Match.objects.all().filter(winningTeam=kwargs["object"]).count()
+        context["TournamentWins"] = Bracket.objects.all().filter(winningTeam=kwargs["object"]).count()
+        return context
 
 
 @login_required

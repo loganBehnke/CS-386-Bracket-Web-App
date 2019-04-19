@@ -13,12 +13,10 @@ class Match(models.Model):
     team2 = models.ForeignKey(Team, related_name='+', blank=True, null=True)
     winningTeam = models.ForeignKey(Team, related_name='+', blank=True, null=True)
     matchNum = models.IntegerField(null=True, blank=True)
-    isByeMatch = models.BooleanField(null=False, blank=False, default=False)
 
 class Round(models.Model):
     matches = models.ManyToManyField(Match, blank=True)
     num = models.IntegerField(null=True, blank=True)
-    roundCompleted = models.BooleanField(null=False, blank=False, default=False)
 
     def __str__(self):
         return "Round " + str(self.num)

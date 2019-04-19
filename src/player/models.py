@@ -15,7 +15,6 @@ class Player(models.Model):
         return self.gameName
 
     def get_absolute_url(self):
-        #return f"teams/{self.slug}"
         return reverse('players', kwargs={'slug': self.slug})
 
     @property
@@ -32,5 +31,4 @@ def rl_post_save_reciever(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(rl_pre_save_reciever, sender=Player)
-
 post_save.connect(rl_post_save_reciever, sender=Player)
