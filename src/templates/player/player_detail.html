@@ -7,7 +7,12 @@
 <p>
     Teams<br>
     <br>
-    TODO
-
+        <div class = list-group>
+            {% for team in Teams %}
+                <a class="list-group-item", href = "/teams/{{team.slug}}">
+                    {{team}}
+                </a>
+            {%endfor%}
+        </div>
 </p>
 {%endblock content%}
