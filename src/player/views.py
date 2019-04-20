@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
 
+from team.models import Team
 from .models import Player
 from .forms import PlayerCreateForm, RigesterForm
 
@@ -14,9 +15,14 @@ class PlayerListView(ListView):
 
 class PlayerDetailView(DetailView):
     queryset = Player.objects.all()
-    #TODO search for player in team to list
-    #instance = queryset.account
-    #teams = instace.team_set.all()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(kwargs)
+        context["Teams"] =  Team.objects.all().filter(players = kwargs["object"])
+        print(context["Teams"])
+        
+        return context
 
 class PlayerCreateView(LoginRequiredMixin, CreateView):
     form_class = PlayerCreateForm

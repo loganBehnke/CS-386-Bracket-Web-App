@@ -21,6 +21,7 @@ class TeamTest(TestCase):
         self.assertEqual(t.title , 'testTeam')
 
     #view test
+
     def test_team_list_view(self):
         t = self.create_team()
         url = reverse("teams")
@@ -43,10 +44,12 @@ class TeamTest(TestCase):
         self.assertTrue(form.is_valid())
 
     def test_join_team_form(self):
+
         user = User.objects.create_user(username='testuser3', password='12345')
         player = Player.objects.create(account=user, gameName = 'testPlayer')
         t = self.create_team()
         data = {'players': [player]}
         form = JoinTeamForm(data)
         self.assertTrue(form.is_valid())
+
 

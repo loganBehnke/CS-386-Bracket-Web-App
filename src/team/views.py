@@ -6,6 +6,8 @@ from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
 from django.contrib import messages
 
+from Bracket.models import Bracket, Match
+
 from .models import Team
 from player.models import Player
 from .forms import TeamCreateForm, JoinTeamForm
@@ -41,7 +43,10 @@ class TeamDetailView(DetailView):
     queryset = Team.objects.all()
 
     def get_context_data(self, **kwargs):
-        return super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
+        context["MatchWins"] = Match.objects.all().filter(winningTeam=kwargs["object"]).count()
+        context["TournamentWins"] = Bracket.objects.all().filter(winningTeam=kwargs["object"]).count()
+        return context
 
 
 @login_required
