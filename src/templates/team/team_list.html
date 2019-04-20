@@ -9,10 +9,10 @@
 
 
 </p>
-<ul>
+<div class='list-group'>
     {% for obj in object_list %}
-        <li><a href="/teams/{{ obj.slug }}/">{{obj}}</a></li>
+        <a class='list-group-item list-group-item-action'href="/teams/{{ obj.slug }}/">{{obj}}</a>
     {%endfor%}
-</ul>
+</div>
 </div>
 {%endblock content%}

@@ -8,12 +8,15 @@
 
     <br>
     Players<br>
+    <div class='list-group'>
     {% for player in object.players.all %}
-        {{player}}<br>
+        <a class='list-group-item list-group-item-action' href='/players/{{player.slug}}'>
+        {{player}}</a>
     {% endfor %}
+    </div>
     <br>
-    
-    <a href="/teams/join-team/{{object.slug}}" class="btn btn-default">Join Team</a>
+
+    <a href="/teams/join-team/{{object.slug}}" class="btn btn-primary btn-lg">Join Team</a>
 
     <div>
         Match Wins: {{MatchWins}}
