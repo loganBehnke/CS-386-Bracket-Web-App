@@ -13,14 +13,15 @@ class TeamTest(TestCase):
         user = User.objects.create_user(username='testuser', password='12345')
         player = Player.objects.create(account=user, gameName = 'testPlayer')
         return Team.objects.create(name = 'testTeam', teamCaptin = player)
-  
+
     def test_team_creation(self):
         t = self.create_team()
         self.assertTrue(isinstance(t, Team))
         self.assertEqual(t.name , 'testTeam')
         self.assertEqual(t.title , 'testTeam')
 
-    #View test
+    #view test
+
     def test_team_list_view(self):
         t = self.create_team()
         url = reverse("teams")
@@ -35,8 +36,6 @@ class TeamTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(bytes(t.title, 'utf-8'), response.content)
 
-    #TODO Join team view
-
     #Form test
     def test_create_team_form(self):
         t = self.create_team()
@@ -45,9 +44,12 @@ class TeamTest(TestCase):
         self.assertTrue(form.is_valid())
 
     def test_join_team_form(self):
-            user = User.objects.create_user(username='testuser3', password='12345')
-            player = Player.objects.create(account=user, gameName = 'testPlayer')
-            t = self.create_team()
-            data = {'players': player}
-            form = JoinTeamForm(data)
-            self.assertTrue(form.is_valid())
+
+        user = User.objects.create_user(username='testuser3', password='12345')
+        player = Player.objects.create(account=user, gameName = 'testPlayer')
+        t = self.create_team()
+        data = {'players': [player]}
+        form = JoinTeamForm(data)
+        self.assertTrue(form.is_valid())
+
+
